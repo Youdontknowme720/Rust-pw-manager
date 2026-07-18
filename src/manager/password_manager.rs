@@ -12,32 +12,25 @@ impl PasswordManager {
         Self { storage }
     }
 
-    pub fn add(&self, entry: PasswordEntry) -> Result<(), String> {
-        let load_content = self.storage.load();
-        let mut entries = match load_content {
-            Ok(e) => e,
-            Err(e) => return Err(e.to_string()),
-        };
+    pub fn add(&self, entry: PasswordEntry) -> Result<(), Box<dyn std::error::Error>> {
+        let mut entries = self.storage.load()?;
 
         entries.push(entry);
-        match self.storage.save(&entries) {
-            Ok(_e) => println!("Successful"),
-            Err(e) => return Err(e.to_string()),
-        };
+        self.storage.save(&entries)?;
 
         Ok(())
     }
 
-    pub fn find(&self, password_id: String)-> Result<PasswordEntry, String>{
+    pub fn find(&self, password_id: String) -> Result<PasswordEntry, String> {
         let load_content = self.storage.load();
         let entries = match load_content {
             Ok(e) => e,
             Err(e) => return Err(e.to_string()),
         };
 
-        for ent in entries{
-            if *ent.service == password_id{
-                return Ok(ent)
+        for ent in entries {
+            if *ent.service == password_id {
+                return Ok(ent);
             }
         }
         Err("Password not found".to_string())
