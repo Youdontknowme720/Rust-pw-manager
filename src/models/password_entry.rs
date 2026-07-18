@@ -3,9 +3,9 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PasswordEntry {
-    service: String,
-    url: String,
-    username: String,
-    password: String,
-    additional_nodes: Option<String>,
+    pub service: String,
+    pub url: String,
+    pub username: String,
+    pub password: String,
+    pub additional_nodes: Option<String>,
 }

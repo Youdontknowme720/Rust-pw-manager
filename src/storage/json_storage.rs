@@ -18,7 +18,10 @@ impl JsonStorage {
         let entries: Vec<PasswordEntry> = serde_json::from_reader(reader)?;
         Ok(entries)
     }
-    pub fn save(&self) -> Result<(), std::io::Error> {
+    pub fn save(&self, entries: &[PasswordEntry]) -> Result<(), std::io::Error> {
+        let file = File::create(&self.path)?;
+        
+        serde_json::to_writer_pretty(file, entries)?;
         Ok(())
     }
 }
