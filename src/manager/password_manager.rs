@@ -35,4 +35,25 @@ impl PasswordManager {
         }
         Err("Password not found".to_string())
     }
+
+    pub fn edit(&self, password_id: String, new_username: Option<String>, new_password: Option<String> ) -> Result<(), Box<dyn std::error::Error>> {
+        let mut entries = self.storage.load()?;
+        for entry in &mut entries {
+            if entry.service == password_id {
+
+                if let Some(username) = new_username {
+                    entry.username = username;
+                }
+
+                if let Some(password) = new_password {
+                    entry.password = password;
+                }
+
+                break;
+            }
+        }
+
+        self.storage.save(&entries)?;
+        Ok(())
+    }
 }

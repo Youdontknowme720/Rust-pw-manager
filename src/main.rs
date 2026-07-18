@@ -8,8 +8,8 @@ mod storage;
 fn main() {
     let s = JsonStorage::new("password.json");
     let manager: PasswordManager = PasswordManager::new(s);
-    match manager.find("Uber".to_string()) {
-        Ok(entry) => println!("Found -> {:?}", entry),
-        Err(_) => println!("Couldn't find entry"),
+    match manager.edit("Uber".to_string(), None, Some("IKnow".to_string())) {
+        Ok(_) => println!("Successful edited the password"),
+        Err(e) => println!("Error -> {}", e),
     };
 }
