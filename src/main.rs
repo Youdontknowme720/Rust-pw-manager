@@ -12,4 +12,8 @@ fn main() {
         Ok(_) => println!("Successful edited the password"),
         Err(e) => println!("Error -> {}", e),
     };
+    match manager.display(){
+        Ok(_) => println!("Done"),
+        Err(e) => println!("Err -> {}", e)
+    };
 }

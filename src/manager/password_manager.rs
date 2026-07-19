@@ -56,4 +56,10 @@ impl PasswordManager {
         self.storage.save(&entries)?;
         Ok(())
     }
+
+    pub fn display(&self)-> Result<(), std::io::Error>{
+        let entries = self.storage.load()?;
+        entries.iter().for_each(|e| {println!("Entry: {:?}", *e)});
+        Ok(())
+    }
 }
